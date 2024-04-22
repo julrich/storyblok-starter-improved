@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react";
 import NextLink from "next/link";
-import { Image } from "@unpic/react/nextjs";
+import { Image } from "@unpic/react/next-legacy";
 
 import { PictureContext } from "@kickstartds/base/lib/picture";
 import { LinkContext, LinkProps } from "@kickstartds/base/lib/link";
