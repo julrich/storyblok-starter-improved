@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react";
 import NextLink from "next/link";
-import { Image } from "@unpic/react/next-legacy";
+import { Image } from "@unpic/react/nextjs";
 
 import { PictureContext } from "@kickstartds/base/lib/picture";
 import { LinkContext, LinkProps } from "@kickstartds/base/lib/link";
@@ -77,11 +77,19 @@ const Picture = forwardRef<
   HTMLImageElement,
   PictureProps & ImgHTMLAttributes<HTMLImageElement>
 >(({ src, ...props }, ref) => {
+  console.log("src", src);
   if (isStoryblokAsset(src)) {
     const filename = (src as unknown as StoryblokAsset)?.filename;
-    return <Image ref={ref} alt="" {...props} src={filename} />;
+    return <Image ref={ref} alt="" {...props} src={`https:${filename}`} />;
   }
-  return <Image ref={ref} alt="" {...props} src={src || ""} />;
+  return (
+    <Image
+      ref={ref}
+      alt=""
+      {...props}
+      src={src?.startsWith("//a") ? `https:${src}` : src || ""}
+    />
+  );
 });
 
 const PictureProvider: FC<PropsWithChildren> = (props) => (
