@@ -87,9 +87,9 @@ const Picture = forwardRef<
       <Image
         ref={ref}
         alt=""
+        {...props}
         width={parseInt(width, 10)}
         height={parseInt(height, 10)}
-        {...props}
         src={src?.startsWith("//a") ? `https:${src}` : src || ""}
       />
     );
