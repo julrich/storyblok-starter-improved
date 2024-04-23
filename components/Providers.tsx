@@ -77,10 +77,22 @@ const Picture = forwardRef<
   HTMLImageElement,
   PictureProps & ImgHTMLAttributes<HTMLImageElement>
 >(({ src, ...props }, ref) => {
-  console.log("src", src);
   if (isStoryblokAsset(src)) {
     const filename = (src as unknown as StoryblokAsset)?.filename;
     return <Image ref={ref} alt="" {...props} src={`https:${filename}`} />;
+  }
+  if (src?.startsWith("//a")) {
+    const [width, height] = src.match(/\/(\d+)x(\d+)\//)?.slice(1) || [];
+    return (
+      <Image
+        ref={ref}
+        alt=""
+        width={parseInt(width, 10)}
+        height={parseInt(height, 10)}
+        {...props}
+        src={src?.startsWith("//a") ? `https:${src}` : src || ""}
+      />
+    );
   }
   return (
     <Image
